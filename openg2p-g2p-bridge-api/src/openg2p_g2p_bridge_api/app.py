@@ -19,7 +19,9 @@ from .controllers import (
     DisbursementEnvelopeController,
     DisbursementEnvelopeStatusController,
     DisbursementStatusController,
+    proof_controller,
 )
+from .controllers.proof import proof_controller
 from .services import (
     AccountStatementService,
     DisbursementEnvelopeService,
@@ -34,6 +36,10 @@ _logger = logging.getLogger(_config.logging_default_logger_name)
 class Initializer(BaseInitializer):
     def initialize(self, **kwargs):
         super().initialize()
+        # Remove incorrect router registration
+        # self.app.include_router(proof_controller.router)
+        
+        # Initialize services and other controllers
         DisbursementEnvelopeService()
         DisbursementService()
         AccountStatementService()

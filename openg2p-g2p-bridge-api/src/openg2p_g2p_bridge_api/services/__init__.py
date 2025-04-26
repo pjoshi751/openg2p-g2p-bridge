@@ -3,3 +3,13 @@ from .disbursement import DisbursementService
 from .disbursement_envelope import DisbursementEnvelopeService
 from .disbursement_envelope_status import DisbursementEnvelopeStatusService
 from .disbursement_status import DisbursementStatusService
+from .proof import ProofService
+
+__all__ = [
+    "AccountStatementService",
+    "DisbursementService",
+    "DisbursementEnvelopeService",
+    "DisbursementEnvelopeStatusService",
+    "DisbursementStatusService",
+    "ProofService",
+]

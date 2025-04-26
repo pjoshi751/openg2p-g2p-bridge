@@ -23,3 +23,14 @@ from .disbursement_envelope import (
     FundsAvailableWithBankEnum,
     FundsBlockedWithBankEnum,
 )
+# Remove this line as disbursement_status.py doesn't exist
+# from .disbursement_status import DisbursementStatusPayload
+from .proof import Proof
+
+__all__ = [
+    "AccountStatement",
+    "DisbursementEnvelope",
+    "DisbursementEnvelopeBatchStatus",
+    # "DisbursementStatusPayload", # Remove as file doesn't exist
+    "Proof",
+]

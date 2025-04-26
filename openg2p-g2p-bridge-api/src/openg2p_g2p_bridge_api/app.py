@@ -11,6 +11,7 @@ from openg2p_g2p_bridge_models.models import (
     AccountStatement,
     DisbursementEnvelope,
     DisbursementEnvelopeBatchStatus,
+    Proof,
 )
 
 from .controllers import (
@@ -59,5 +60,6 @@ class Initializer(BaseInitializer):
             await DisbursementEnvelope.create_migrate()
             await DisbursementEnvelopeBatchStatus.create_migrate()
             await AccountStatement.create_migrate()
+            await Proof.create_migrate()
 
         asyncio.run(migrate())

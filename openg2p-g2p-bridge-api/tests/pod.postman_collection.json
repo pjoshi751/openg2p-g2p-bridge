@@ -1,0 +1,109 @@
+{
+    "info": {
+        "_postman_id": "a1b2c3d4-e5f6-7890-1234-abcdef123456",
+        "name": "OpenG2P Bridge Proof API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Submit Proof",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "disbursement_id",
+                            "value": "DISB-XYZ-789",
+                            "type": "text",
+                            "description": "Unique ID for the disbursement"
+                        },
+                        {
+                            "key": "agent_id",
+                            "value": "AGENT-PQR-456",
+                            "type": "text",
+                            "description": "ID of the agent submitting"
+                        },
+                        {
+                            "key": "beneficiary_id",
+                            "value": "BEN-LMN-123",
+                            "type": "text",
+                            "description": "ID of the beneficiary"
+                        },
+                        {
+                            "key": "latitude",
+                            "value": "12.9716",
+                            "type": "text",
+                            "description": "GPS Latitude"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "77.5946",
+                            "type": "text",
+                            "description": "GPS Longitude"
+                        },
+                        {
+                            "key": "photos",
+                            "type": "file",
+                            "src": [],
+                            "description": "First photo file (Select file in Postman)"
+                        },
+                        {
+                            "key": "photos",
+                            "type": "file",
+                            "src": [],
+                            "description": "Second photo file (Select file in Postman)"
+                        },
+                         {
+                            "key": "descriptions",
+                            "value": "Photo of beneficiary holding ID card",
+                            "type": "text",
+                            "description": "Description for the first photo"
+                        },
+                        {
+                            "key": "descriptions",
+                            "value": "Photo of beneficiary signing document",
+                            "type": "text",
+                            "description": "Description for the second photo"
+                        },
+                        {
+                            "key": "geojson",
+                            "value": "{\"type\": \"Point\", \"coordinates\": [77.5946, 12.9716]}",
+                            "type": "text",
+                            "description": "(Optional) GeoJSON object as a string"
+                        },
+                        {
+                            "key": "proofs",
+                            "value": "{\"@context\": \"https://schema.org\", \"@type\": \"Claim\", \"claimReviewed\": \"Proof of Liveliness\"}",
+                            "type": "text",
+                            "description": "(Optional) Proofs JSON-LD object as a string"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/proof/submit_proof/",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "proof",
+                        "submit_proof",
+                        ""
+                    ]
+                },
+                "description": "Submits proof of delivery/disbursement, including photos and metadata."
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8000",
+            "type": "string"
+        }
+    ]
+}

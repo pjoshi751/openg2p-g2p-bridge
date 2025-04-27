@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root {
+  /* OpenG2P color palette based on the logo */
+  --openg2p-green: #4e9b47;
+  --openg2p-blue: #00a0df;
+  --openg2p-dark-blue: #0078a0;
+  --openg2p-light-green: #8cc63f;
+  --openg2p-light-blue: #7fdbff;
+  --openg2p-gray: #58595b;
+  --openg2p-light-gray: #f1f1f1;
+}

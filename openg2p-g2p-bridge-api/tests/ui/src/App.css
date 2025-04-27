@@ -1,6 +1,6 @@
-:root {
+root {
   --openg2p-yellow: #F5BB1A;
-  --openg2p-black: #001167;
+  --openg2p-black: #061327;
   --openg2p-orange: #F07B1A;
   --openg2p-magenta: #88498F;
   --openg2p-grey: #C4C4C4;
@@ -57,7 +57,7 @@
 .brand-title {
   font-size: 1.7rem;
   font-weight: bold;
-  color: #001167;
+  color: var(--openg2p-black);
   letter-spacing: 0.02em;
 }
 
@@ -95,8 +95,8 @@ h1, .brand-title {
 }
 
 .submit-button {
-  background-color: #F6F6F6;
-  color: #001167;
+  background-color: #C4C4C4;
+  color: #061327;
   font-weight: bold;
   padding: 0.75rem 2rem;
   border: none;
@@ -109,8 +109,8 @@ h1, .brand-title {
 }
 
 .submit-button:hover {
-  background-color: #C4C4C4;
-  color: #001167;
+  background-color: #F07B1A;
+  color: #061327;
 }
 
 .submit-button:disabled {

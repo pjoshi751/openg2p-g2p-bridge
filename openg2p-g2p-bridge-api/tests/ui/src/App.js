@@ -13,7 +13,7 @@ function App() {
           <img src={logo} className="App-logo" alt="OpenG2P Logo" />
         </div>
         <div className="App-header-title center-title">
-          <span className="brand-title" style={{ color: '#001167' }}>Proof Submission Portal</span>
+          <span className="brand-title">Proof Submission Portal</span>
         </div>
       </header>
       <main className="App-main">

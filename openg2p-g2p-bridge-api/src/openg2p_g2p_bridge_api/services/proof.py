@@ -57,7 +57,8 @@ class ProofService(BaseService):
                     longitude=longitude,
                     photo_details=photo_details,
                     geojson=geojson,
-                    proofs_ld=proofs_ld
+                    proofs_ld=proofs_ld,
+                    active=True
                 )
 
                 session.add(new_proof)

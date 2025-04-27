@@ -23,13 +23,14 @@ _logger = logging.getLogger(_config.logging_default_logger_name)
 UPLOAD_DIR_BASE = Path("/tmp/proof_uploads")
 
 class ProofController(BaseController):
-    # Inject service instance via Depends in __init__
-    def __init__(self, service: ProofService = Depends(proof_service)):
-        super().__init__()
-        # Use the injected service instance
-        self.service = service
-        # self.proof_service = ProofService.get_component() # Remove old way
-        self.router.tags += ["G2P Bridge Proof Submission"]
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Correctly get the service instance using get_component()
+        # Remove the incorrect Depends assignment
+        # self.service = Depends(proof_service) 
+        self.service = ProofService.get_component()
+
+        self.router.tags += ["G2P Bridge Proof"] # Use a descriptive tag
 
         # Ensure base upload directory exists
         UPLOAD_DIR_BASE.mkdir(parents=True, exist_ok=True)

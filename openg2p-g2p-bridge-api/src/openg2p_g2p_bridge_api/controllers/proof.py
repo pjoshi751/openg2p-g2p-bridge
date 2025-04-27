@@ -6,7 +6,7 @@ import uuid # For unique temporary directory
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 from fastapi import (
-    APIRouter, Form, File, UploadFile, HTTPException, status, Depends
+    APIRouter, Form, File, UploadFile, HTTPException, status, Depends, Request
 )
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError # Import SQLAlchemyError
@@ -65,6 +65,7 @@ class ProofController(BaseController):
 
     async def submit_proof(
         self,
+        request: Request,
         disbursement_id: str = Form(..., description="ID of the disbursement"),
         agent_id: str = Form(..., description="ID of the agent submitting the proof"),
         beneficiary_id: str = Form(..., description="ID of the beneficiary"),
@@ -73,13 +74,18 @@ class ProofController(BaseController):
         photos: List[UploadFile] = File(..., description="Proof image files (min 1, max 5)"),
         geojson: Optional[str] = Form(None, description="Optional GeoJSON object as string"),
         proofs: Optional[str] = Form(None, description="Optional proofs in JSON LD format as string"),
-        descriptions: Optional[List[str]] = Form(None, description="Optional descriptions for each photo"),
     ):
         """
         Handles the proof submission request. Saves photos, parses JSON,
         calls the ProofService to save data, and handles cleanup.
         """
         _logger.info(f"Controller received proof submission for disbursement_id={disbursement_id}")
+
+        # === Manually extract descriptions ===
+        form_data = await request.form()
+        descriptions = form_data.getlist("descriptions")
+        _logger.info(f"Manually extracted descriptions: type={type(descriptions)}, value={descriptions}")
+        # === End Manual Extraction ===
 
         # 1. Basic Validation
         if len(photos) > 5:
@@ -88,9 +94,28 @@ class ProofController(BaseController):
         if len(photos) < 1:
              _logger.error("No photos submitted.")
              raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one photo must be submitted.")
-        if descriptions and len(descriptions) != len(photos):
-            _logger.error("Mismatch between number of photos and descriptions.")
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Number of descriptions must match number of photos if provided.")
+
+        # Handle descriptions: Ensure it's a list even if only one or none provided
+        processed_descriptions = []
+        # Check if the manually extracted list is empty or contains actual descriptions
+        if not descriptions: # Checks for empty list
+            # Correctly create a list of empty strings if None/Empty
+            processed_descriptions = [""] * len(photos)
+        else:
+             # descriptions is already a list from getlist()
+             processed_descriptions = descriptions
+
+        # Ensure descriptions list length matches photos list length
+        if len(photos) != len(processed_descriptions):
+            _logger.warning(
+                f"Mismatch between number of photos ({len(photos)}) and descriptions ({len(processed_descriptions)}). Adjusting descriptions."
+            )
+            # Pad descriptions with empty strings if fewer descriptions than photos
+            if len(processed_descriptions) < len(photos):
+                 processed_descriptions.extend([""] * (len(photos) - len(processed_descriptions)))
+            # Truncate descriptions if more descriptions than photos
+            else:
+                 processed_descriptions = processed_descriptions[:len(photos)]
 
         # 2. Setup Temporary Storage
         request_id = str(uuid.uuid4())
@@ -116,7 +141,7 @@ class ProofController(BaseController):
                         shutil.copyfileobj(photo.file, buffer)
                     saved_file_paths.append(str(file_path)) # Store absolute path as string
                     # Get description or default to empty string
-                    description = descriptions[i] if descriptions and i < len(descriptions) else ""
+                    description = processed_descriptions[i] # Use the processed list
                     photo_details.append({"file_path": str(file_path), "description": description})
                     _logger.debug(f"Saved photo to: {file_path}")
                 except Exception as e:

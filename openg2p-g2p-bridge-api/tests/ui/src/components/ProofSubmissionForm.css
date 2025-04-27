@@ -146,8 +146,9 @@
   border-radius: 4px;
 }
 
+/* --- Button Styles (Moved from App.css) --- */
 .submit-button {
-  background-color: var(--openg2p-orange); /* Use orange as default submit color */
+  background-color: var(--openg2p-gray); /* Default color */
   color: var(--openg2p-black);
   font-weight: bold;
   padding: 0.75rem 2rem;
@@ -161,7 +162,7 @@
 }
 
 .submit-button:hover {
-  background-color: var(--openg2p-yellow); /* Yellow on hover */
+  background-color: var(--openg2p-orange); /* Hover color */
   color: var(--openg2p-black);
 }
 

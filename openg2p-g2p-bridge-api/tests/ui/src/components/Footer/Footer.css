@@ -1,0 +1,7 @@
+.Footer {
+  background-color: var(--openg2p-gray); /* Use variable */
+  color: var(--openg2p-black); /* Use variable */
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: auto; /* Push footer to bottom in flex container */
+}

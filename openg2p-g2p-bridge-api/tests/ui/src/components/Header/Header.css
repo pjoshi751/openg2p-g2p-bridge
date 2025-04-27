@@ -1,0 +1,45 @@
+.Header {
+  background-color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.Header-left {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.Header-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.center-title {
+  text-align: center;
+}
+
+.Header-logo {
+  height: 50px;
+  pointer-events: none;
+  margin-right: 1.5rem;
+}
+
+.brand-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: var(--openg2p-black); /* Use variable defined in index.css */
+  letter-spacing: 0.02em;
+}

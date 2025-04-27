@@ -1,3 +1,10 @@
+/* Basic Form Styling */
+.proof-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Spacing between form groups */
+}
+
 .form-container {
   width: 100%;
 }
@@ -5,6 +12,8 @@
 .form-group {
   margin-bottom: 1.5rem;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
@@ -12,6 +21,7 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--openg2p-black);
+  font-weight: bold;
 }
 
 .form-group input[type="text"] {
@@ -21,12 +31,41 @@
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s;
+  border: 1px solid var(--openg2p-gray);
 }
 
 .form-group input[type="text"]:focus {
   border-color: var(--openg2p-blue);
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 160, 223, 0.2);
+}
+
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--openg2p-gray);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  font-family: monospace; /* Style for JSON/GeoJSON text areas */
+  resize: vertical;
+}
+
+.form-group .required {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem; /* Spacing between inputs in a row */
+}
+
+.form-row .form-group.geo {
+  flex: 1; /* Make lat/long inputs take equal space */
 }
 
 .file-input-container {
@@ -76,16 +115,39 @@
   border-radius: 4px;
   padding: 0.5rem;
   max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .image-preview img {
   width: 100%;
   height: auto;
   border-radius: 2px;
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.photo-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.photo-description {
+  width: 100px; /* Match image width */
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--openg2p-gray);
+  border-radius: 4px;
 }
 
 .submit-button {
-  background-color: var(--openg2p-grey);
+  background-color: var(--openg2p-orange); /* Use orange as default submit color */
   color: var(--openg2p-black);
   font-weight: bold;
   padding: 0.75rem 2rem;
@@ -93,18 +155,18 @@
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   margin-top: 1rem;
   width: 100%;
 }
 
 .submit-button:hover {
-  background-color: var(--openg2p-orange);
+  background-color: var(--openg2p-yellow); /* Yellow on hover */
   color: var(--openg2p-black);
 }
 
 .submit-button:disabled {
-  background-color: #C4C4C4;
-  color: #F6F6F6;
+  background-color: var(--openg2p-gray); /* Use gray variable */
+  color: var(--openg2p-light-gray); /* Use light-gray variable */
   cursor: not-allowed;
 }

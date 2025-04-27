@@ -3,19 +3,13 @@ import './App.css';
 import ProofSubmissionForm from './components/ProofSubmissionForm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logo from './assets/OpenG2PHorizontalLogoLightBackground.png';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="App-header-left">
-          <img src={logo} className="App-logo" alt="OpenG2P Logo" />
-        </div>
-        <div className="App-header-title center-title">
-          <span className="brand-title">Proof Submission Portal</span>
-        </div>
-      </header>
+      <Header />
       <main className="App-main">
         <div className="container">
           <p className="description">
@@ -24,9 +18,7 @@ function App() {
           <ProofSubmissionForm />
         </div>
       </main>
-      <footer className="App-footer">
-        <p>&copy; {new Date().getFullYear()} OpenG2P. All rights reserved.</p>
-      </footer>
+      <Footer />
       <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );

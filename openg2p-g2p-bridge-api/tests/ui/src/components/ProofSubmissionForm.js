@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import './ProofSubmissionForm.css';
-
-const MAX_PHOTOS = 5;
+import { config } from '../config';
 
 const ProofSubmissionForm = () => {
   const [formData, setFormData] = useState({
@@ -32,8 +31,8 @@ const ProofSubmissionForm = () => {
   // Handle file input (multiple)
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length > MAX_PHOTOS) {
-      toast.error(`Maximum ${MAX_PHOTOS} photos allowed.`);
+    if (files.length > config.maxPhotos) {
+      toast.error(`Maximum ${config.maxPhotos} photos allowed.`);
       return;
     }
     for (const file of files) {
@@ -81,8 +80,8 @@ const ProofSubmissionForm = () => {
       toast.error('At least one photo is required.');
       return;
     }
-    if (photos.length > MAX_PHOTOS) {
-      toast.error(`Maximum ${MAX_PHOTOS} photos allowed.`);
+    if (photos.length > config.maxPhotos) {
+      toast.error(`Maximum ${config.maxPhotos} photos allowed.`);
       return;
     }
     if (proofs && !isValidJsonLd(proofs)) {
@@ -103,7 +102,7 @@ const ProofSubmissionForm = () => {
     }
     setIsSubmitting(true);
     try {
-      const response = await axios.post('/api/v1/submit_proof', submitData, {
+      const response = await axios.post(config.api.submitProof, submitData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (response.status === 200) {
@@ -211,7 +210,6 @@ const ProofSubmissionForm = () => {
             onChange={handleInputChange}
             placeholder='{"type": "Point", "coordinates": [77.2090, 28.6139]}'
             rows={2}
-            style={{ fontFamily: 'monospace' }}
           />
         </div>
         <div className="form-group">
@@ -223,11 +221,10 @@ const ProofSubmissionForm = () => {
             onChange={handleInputChange}
             placeholder='{"@context": "https://schema.org", "@type": "Proof", "proofValue": "abc123"}'
             rows={3}
-            style={{ fontFamily: 'monospace' }}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="photos">Proof Images<span className="required">*</span> (max {MAX_PHOTOS})</label>
+          <label htmlFor="photos">Proof Images<span className="required">*</span> (max {config.maxPhotos})</label>
           <input
             type="file"
             id="photos"

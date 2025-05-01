@@ -19,8 +19,10 @@ from ..services.proof import ProofService, proof_service
 _config = Settings.get_config()
 _logger = logging.getLogger(_config.logging_default_logger_name)
 
-# Define upload directory base
-UPLOAD_DIR_BASE = Path("/tmp/proof_uploads")
+# Define the base directory for uploads
+# Get upload directory from env var, default to /tmp/proof_uploads
+upload_dir_str = os.getenv('PROOF_UPLOAD_DIR', '/tmp/proof_uploads')
+UPLOAD_DIR_BASE = Path(upload_dir_str)
 
 class ProofController(BaseController):
     def __init__(self, **kwargs):

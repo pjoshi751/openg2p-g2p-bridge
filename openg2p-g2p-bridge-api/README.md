@@ -1,4 +1,4 @@
-#  openg2p-g2p-bridge-api
+# Bridge API Server
 
 [![Pre-commit Status](https://github.com/OpenG2P/openg2p-g2p-bridge-api/actions/workflows/pre-commit.yml/badge.svg?branch=develop)](https://github.com/OpenG2P/openg2p-g2p-bridge-api/actions/workflows/pre-commit.yml?query=branch%3Adevelop)
 [![Build Status](https://github.com/OpenG2P/openg2p-g2p-bridge-api/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/OpenG2P/openg2p-g2p-bridge-api/actions/workflows/test.yml?query=branch%3Adevelop)
@@ -8,6 +8,13 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/openg2p-g2p-bridge-api)
 
 
+## Run on command line
+Set the below environment variable to a folder on your machine where photos will be stored.
+```
+> cd openg2p-g2p-bridge-api
+> export PROOF_UPLOAD_DIR=/Users/puneet/Documents/OpenG2P/proofs
+> gunicorn "main:app" --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 127.0.0.1:8000
+```
 
 ## Licenses
 

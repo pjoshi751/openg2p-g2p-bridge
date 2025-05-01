@@ -16,7 +16,7 @@ class ProofService(BaseService):
     async def process_submission(
         self,
         disbursement_id: str,
-        agent_id: str,
+        agent_id: Optional[str],
         beneficiary_id: str,
         latitude: float,
         longitude: float,

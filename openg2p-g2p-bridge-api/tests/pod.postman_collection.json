@@ -23,7 +23,7 @@
                             "key": "agent_id",
                             "value": "AGENT-PQR-456",
                             "type": "text",
-                            "description": "ID of the agent submitting"
+                            "description": "(Optional) ID of the agent submitting"
                         },
                         {
                             "key": "beneficiary_id",

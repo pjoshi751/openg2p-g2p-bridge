@@ -67,7 +67,7 @@ class ProofController(BaseController):
         self,
         request: Request,
         disbursement_id: str = Form(..., description="ID of the disbursement"),
-        agent_id: str = Form(..., description="ID of the agent submitting the proof"),
+        agent_id: Optional[str] = Form(None, description="ID of the agent submitting the proof (optional)"),
         beneficiary_id: str = Form(..., description="ID of the beneficiary"),
         latitude: float = Form(..., description="Latitude in decimal degrees"),
         longitude: float = Form(..., description="Longitude in decimal degrees"),
@@ -88,6 +88,10 @@ class ProofController(BaseController):
         # === End Manual Extraction ===
 
         # 1. Basic Validation
+        if not disbursement_id or not beneficiary_id or latitude is None or longitude is None:
+            _logger.error('Missing mandatory fields (excluding agent_id).')
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Missing mandatory fields: disbursement_id, beneficiary_id, latitude, longitude.")
+
         if len(photos) > 5:
             _logger.error("Too many photos submitted.")
             raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Maximum of 5 photos allowed.")
@@ -174,7 +178,7 @@ class ProofController(BaseController):
             # Use the injected service instance `self.service`
             created_proof_id = await self.service.process_submission(
                 disbursement_id=disbursement_id,
-                agent_id=agent_id,
+                agent_id=agent_id, # Pass potentially None agent_id
                 beneficiary_id=beneficiary_id,
                 latitude=latitude,
                 longitude=longitude,

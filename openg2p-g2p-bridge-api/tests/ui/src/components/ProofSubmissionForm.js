@@ -72,7 +72,7 @@ const ProofSubmissionForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { disbursement_id, agent_id, beneficiary_id, latitude, longitude, photos, proofs } = formData;
-    if (!disbursement_id || !agent_id || !beneficiary_id || !latitude || !longitude) {
+    if (!disbursement_id || !beneficiary_id || !latitude || !longitude) {
       toast.error('All fields except photo descriptions, geojson, and proofs are mandatory.');
       return;
     }
@@ -150,7 +150,7 @@ const ProofSubmissionForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="agent_id">Agent ID<span className="required">*</span></label>
+          <label htmlFor="agent_id">Agent ID</label>
           <input
             type="text"
             id="agent_id"
@@ -158,7 +158,6 @@ const ProofSubmissionForm = () => {
             value={formData.agent_id}
             onChange={handleInputChange}
             placeholder="Enter agent ID"
-            required
           />
         </div>
         <div className="form-group">

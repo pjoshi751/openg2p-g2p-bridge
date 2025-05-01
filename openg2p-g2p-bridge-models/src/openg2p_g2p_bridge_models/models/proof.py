@@ -17,7 +17,7 @@ class Proof(BaseORMModelWithTimes):
     disbursement_id: Mapped[str] = mapped_column(String, index=True)
 
     # IDs of the involved parties
-    agent_id: Mapped[str] = mapped_column(String, index=True)
+    agent_id: Mapped[Optional[str]] = mapped_column(String, index=True, nullable=True) 
     beneficiary_id: Mapped[str] = mapped_column(String, index=True)
 
     # Geo-location data

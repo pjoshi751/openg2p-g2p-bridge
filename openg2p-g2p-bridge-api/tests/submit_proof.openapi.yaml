@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: OpenG2P Proof Submission API
+  description: |
+    API to submit proof images for a disbursement, including geo location, photo descriptions, and optional JSON LD proofs. Accepts up to 5 images, with optional description for each. All fields are mandatory except photo descriptions, geojson, and proofs. At least one photo is required.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/v1/submit_proof:
+    post:
+      summary: Submit proof for disbursement
+      operationId: submit_proof
+      description: |
+        Submit proof images for a disbursement with agent and beneficiary details, geo location, photo descriptions, and optional JSON LD proofs.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - disbursement_id
+                - agent_id
+                - beneficiary_id
+                - latitude
+                - longitude
+                - photos
+              properties:
+                disbursement_id:
+                  type: string
+                  description: ID of the disbursement
+                  example: DISB-12345
+                agent_id:
+                  type: string
+                  description: ID of the agent submitting the proof
+                  example: AGENT-001
+                beneficiary_id:
+                  type: string
+                  description: ID of the beneficiary
+                  example: BEN-789
+                latitude:
+                  type: number
+                  format: float
+                  description: Latitude in decimal degrees
+                  example: 28.6139
+                longitude:
+                  type: number
+                  format: float
+                  description: Longitude in decimal degrees
+                  example: 77.2090
+                geojson:
+                  type: string
+                  description: Optional GeoJSON object as string
+                  example: '{"type": "Point", "coordinates": [77.2090, 28.6139]}'
+                proofs:
+                  type: string
+                  format: json
+                  description: Optional proofs in JSON LD format as string. Must be valid JSON LD.
+                  example: '{"@context": "https://schema.org", "@type": "Proof", "proofValue": "abc123"}'
+                photos:
+                  type: array
+                  description: Proof image files (max 5)
+                  minItems: 1
+                  maxItems: 5
+                  items:
+                    type: string
+                    format: binary
+                descriptions:
+                  type: array
+                  description: Optional descriptions for each photo
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Proof submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProofSubmissionResponse'
+        '400':
+          description: Bad request, invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Disbursement ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Disbursement information mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: Maximum limit for photos reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Mandatory field not submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ProofSubmissionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: Proof submitted successfully
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+          example: DISBURSEMENT_NOT_FOUND
+        detail:
+          type: string
+          example: The provided disbursement ID does not exist.
